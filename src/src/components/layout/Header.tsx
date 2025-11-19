@@ -18,7 +18,7 @@ export function Header({
 
         <div className="flex items-center gap-2">
           <div className="w-10 h-10 rounded-full flex items-center justify-center shadow-lg overflow-hidden bg-white">
-            <img src="/phouse_logo_nobg.png" alt="Powerhouse9ja Logo" className="w-full h-full object-contain" />
+            <img src="https://uploadthingy.s3.us-west-1.amazonaws.com/7PhhF5n42qvpwp1TQSmfPp/phouse_logo_nobg.png" alt="Powerhouse9ja Logo" className="w-full h-full object-contain" />
           </div>
           <span className="font-bold text-lg">Powerhouse9ja</span>
         </div>

@@ -14,7 +14,7 @@ export function SplashScreen({
         <div className="relative w-32 h-32 mx-auto mb-8">
           <div className="absolute inset-0 bg-gradient-to-br from-gold to-gold-light rounded-full animate-pulse-slow opacity-50"></div>
           <div className="absolute inset-2 rounded-full flex items-center justify-center shadow-2xl">
-            <img src="/phouse_logo_nobg.png" alt="Powerhouse9ja Logo" className="w-full h-full object-contain" />
+            <img src="public/phouse_logo_nobg.png" alt="Powerhouse9ja Logo" className="w-full h-full object-contain" />
           </div>
           <div className="absolute inset-0 border-4 border-gold/30 rounded-full animate-spin-slow"></div>
         </div>
