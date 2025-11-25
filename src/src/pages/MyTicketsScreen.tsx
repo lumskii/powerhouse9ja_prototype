@@ -70,9 +70,9 @@ export function MyTicketsScreen({
                         Draw Date: {ticket.date}
                       </p>
                     </div>
-                    <div className="w-16 h-16 bg-white dark:bg-gray-700 rounded-xl flex items-center justify-center shadow-lg">
+                    {/* <div className="w-16 h-16 bg-white dark:bg-gray-700 rounded-xl flex items-center justify-center shadow-lg">
                       <QrCodeIcon size={32} className="text-primary dark:text-gold" />
-                    </div>
+                    </div> */}
                   </div>
 
                   <div className="bg-gradient-to-r from-primary to-primary-light dark:from-gray-700 dark:to-gray-600 rounded-xl p-4 mb-4">

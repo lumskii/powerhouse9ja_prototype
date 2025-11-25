@@ -71,7 +71,7 @@ export function RegisterScreen({
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4 shadow-xl overflow-hidden bg-white">
-            <img src="/phouse_logo_nobg.png" alt="Powerhouse9ja Logo" className="w-full h-full object-contain" />
+            <img src="https://uploadthingy.s3.us-west-1.amazonaws.com/7PhhF5n42qvpwp1TQSmfPp/phouse_logo_nobg.png" alt="Powerhouse9ja Logo" className="w-full h-full object-contain" />
           </div>
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
             Create Account

@@ -66,7 +66,7 @@ export function WalletScreen({
         </Card>
 
         {/* Quick Actions */}
-        <div className="grid grid-cols-3 gap-3">
+        {/* <div className="grid grid-cols-3 gap-3">
           <button className="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-md hover:shadow-lg transition-shadow text-center">
             <CreditCardIcon size={24} className="text-primary dark:text-gold mx-auto mb-2" />
             <p className="text-xs font-medium text-gray-900 dark:text-white">
@@ -85,7 +85,7 @@ export function WalletScreen({
               Request
             </p>
           </button>
-        </div>
+        </div> */}
 
         {/* Transactions */}
         <div>
