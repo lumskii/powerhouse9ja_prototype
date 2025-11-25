@@ -19,6 +19,9 @@ export function RegisterScreen({
     agreeToTerms: false
   });
   const [errors, setErrors] = useState<Record<string, string>>({});
+  const [useOtp, setUseOtp] = useState(false);
+  const [otpSent, setOtpSent] = useState<string | null>(null);
+  const [otpInput, setOtpInput] = useState('');
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     // Basic validation
@@ -26,9 +29,11 @@ export function RegisterScreen({
     if (!formData.fullName) newErrors.fullName = 'Full name is required';
     if (!formData.email) newErrors.email = 'Email is required';
     if (!formData.phone) newErrors.phone = 'Phone number is required';
-    if (!formData.password) newErrors.password = 'Password is required';
-    if (formData.password !== formData.confirmPassword) {
-      newErrors.confirmPassword = 'Passwords do not match';
+    if (!useOtp) {
+      if (!formData.password) newErrors.password = 'Password is required';
+      if (formData.password !== formData.confirmPassword) {
+        newErrors.confirmPassword = 'Passwords do not match';
+      }
     }
     if (!formData.agreeToTerms) {
       newErrors.agreeToTerms = 'You must agree to the terms';
@@ -37,8 +42,30 @@ export function RegisterScreen({
       setErrors(newErrors);
       return;
     }
-    // If validation passes, proceed with registration
+    // If validation passes and OTP flow not used, proceed
+    if (useOtp) {
+      if (!otpSent) {
+        alert('Please send OTP to verify your phone number');
+        return;
+      }
+      if (otpInput !== otpSent) {
+        alert('Invalid OTP. Please verify the code sent to your phone.');
+        return;
+      }
+      // OTP verified (mock)
+      onRegister();
+      return;
+    }
     onRegister();
+  };
+  const sendOtp = () => {
+    if (!formData.phone) {
+      alert('Please enter phone number first');
+      return;
+    }
+    const code = Math.floor(100000 + Math.random() * 900000).toString();
+    setOtpSent(code);
+    alert(`Mock OTP sent: ${code}`);
   };
   return <div className="min-h-screen bg-gradient-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800 flex items-center justify-center p-4">
       <div className="w-full max-w-md">
@@ -66,21 +93,52 @@ export function RegisterScreen({
             email: e.target.value
           })} error={errors.email} required />
 
-            <Input type="tel" label="Phone Number" placeholder="Enter your phone number" icon={<PhoneIcon size={20} />} value={formData.phone} onChange={e => setFormData({
-            ...formData,
-            phone: e.target.value
-          })} error={errors.phone} required />
+            <div className="flex items-center justify-between">
+              <Input type="tel" label="Phone Number" placeholder="Enter your phone number" icon={<PhoneIcon size={20} />} value={formData.phone} onChange={e => setFormData({
+              ...formData,
+              phone: e.target.value
+            })} error={errors.phone} required />
+              <label className="ml-3 flex items-center gap-2 text-sm text-gray-600 dark:text-gray-400">
+                <input type="checkbox" checked={useOtp} onChange={e => setUseOtp(e.target.checked)} className="rounded border-gray-300" />
+                Use OTP verification
+              </label>
+            </div>
 
-            <Input type="password" label="Password" placeholder="Create a strong password" icon={<LockIcon size={20} />} value={formData.password} onChange={e => setFormData({
-            ...formData,
-            password: e.target.value
-          })} error={errors.password} required />
+            {!useOtp && (
+              <>
+                <Input type="password" label="Password" placeholder="Create a strong password" icon={<LockIcon size={20} />} value={formData.password} onChange={e => setFormData({
+                ...formData,
+                password: e.target.value
+              })} error={errors.password} required />
 
-            <Input type="password" label="Confirm Password" placeholder="Re-enter your password" icon={<LockIcon size={20} />} value={formData.confirmPassword} onChange={e => setFormData({
-            ...formData,
-            confirmPassword: e.target.value
-          })} error={errors.confirmPassword} required />
+                <Input type="password" label="Confirm Password" placeholder="Re-enter your password" icon={<LockIcon size={20} />} value={formData.confirmPassword} onChange={e => setFormData({
+                ...formData,
+                confirmPassword: e.target.value
+              })} error={errors.confirmPassword} required />
+              </>
+            )}
 
+            {useOtp && (
+              <div className="space-y-3">
+                {otpSent ? (
+                  <>
+                    <Input type="text" label="Enter OTP" placeholder="6-digit code" value={otpInput} onChange={e => setOtpInput(e.target.value)} />
+                    <div className="flex gap-3">
+                      <Button type="button" variant="primary" className="flex-1" onClick={() => {
+                        if (otpInput === otpSent) {
+                          alert('OTP verified locally');
+                        } else {
+                          alert('Invalid OTP');
+                        }
+                      }}>Verify OTP</Button>
+                      <Button type="button" variant="outline" className="flex-1" onClick={sendOtp}>Resend OTP</Button>
+                    </div>
+                  </>
+                ) : (
+                  <Button type="button" variant="primary" fullWidth onClick={sendOtp}>Send OTP</Button>
+                )}
+              </div>
+            )}
             <div>
               <label className="flex items-start gap-3 text-sm text-gray-600 dark:text-gray-400 cursor-pointer">
                 <input type="checkbox" checked={formData.agreeToTerms} onChange={e => setFormData({
