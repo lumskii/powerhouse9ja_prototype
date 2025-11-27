@@ -7,6 +7,7 @@ import { Card } from '../components/ui/Card';
 import { Badge } from '../components/ui/Badge';
 import { ProgressBar } from '../components/ui/ProgressBar';
 import { PrizeCard } from '../components/raffle/PrizeCard';
+import { WinnerCardStack } from '../components/ui/WinnerCardStack';
 interface HomeScreenProps {
   onNavigate: (screen: string) => void;
   onBuyTicket: () => void;
@@ -19,6 +20,19 @@ export function HomeScreen({
   // Current raffle state - 67% means 50% milestone is unlocked!
   const currentProgress = 67;
   const nextMilestone = 75;
+  // 10 winners at 50% milestone
+  const fiftyPercentWinners = [
+    'PH9-****-3421',
+    'PH9-****-7892',
+    'PH9-****-1563',
+    'PH9-****-9204',
+    'PH9-****-4567',
+    'PH9-****-8123',
+    'PH9-****-6789',
+    'PH9-****-2345',
+    'PH9-****-5678',
+    'PH9-****-9012',
+  ];
   const prizes = [{
     tier: '50%' as const,
     name: '5KVA Generator',
@@ -118,26 +132,29 @@ export function HomeScreen({
           </Card>
         </div>
 
-        {/* First Prize Winner Announcement */}
-        <Card className="bg-gradient-to-r from-green-500 to-green-600 text-white">
-          <div className="flex items-center gap-3 mb-3">
-            <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center">
-              <CheckCircleIcon size={24} />
-            </div>
+        {/* Winner Card Stack - 50% Milestone */}
+        <div>
+          <div className="flex items-center justify-between mb-4">
             <div>
-              <Badge variant="gold" className="mb-1">
+              <Badge variant="gold" className="mb-2">
                 50% Milestone Reached!
               </Badge>
-              <h3 className="font-bold text-lg">First Prize Unlocked</h3>
+              <h3 className="text-xl font-bold text-gray-900 dark:text-white">
+                10 Winners Announced
+              </h3>
+              <p className="text-sm text-gray-500 dark:text-gray-400">
+                Swipe to see all winners
+              </p>
             </div>
           </div>
-          <div className="bg-white/10 backdrop-blur-sm rounded-xl p-3">
-            <p className="text-sm text-white/80 mb-1">
-              Winner of 5KVA Generator
-            </p>
-            <p className="font-mono text-lg font-bold">PH9-****-3421</p>
-          </div>
-        </Card>
+
+          <WinnerCardStack
+            winners={fiftyPercentWinners}
+            prizeName="5KVA Generator"
+            prizeIcon="⚡"
+            tier="50%"
+          />
+        </div>
 
         {/* Prize Tier Preview */}
         <div>
