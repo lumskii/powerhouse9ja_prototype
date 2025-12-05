@@ -12,6 +12,7 @@ export function LoginScreen({
 }: LoginScreenProps) {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     onLogin();
@@ -20,7 +21,7 @@ export function LoginScreen({
       <div className="w-full max-w-md">
         <div className="text-center mb-8">
           <div className="w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-4 shadow-xl overflow-hidden bg-white">
-            <img src="/phouse_logo_nobg.png" alt="Powerhouse9ja Logo" className="w-full h-full object-contain" />
+            <img src="https://uploadthingy.s3.us-west-1.amazonaws.com/7PhhF5n42qvpwp1TQSmfPp/phouse_logo_nobg.png" alt="Powerhouse9ja Logo" className="w-full h-full object-contain" />
           </div>
           <h1 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
             Welcome Back
@@ -55,6 +56,18 @@ export function LoginScreen({
               <span>256-bit SSL Encrypted</span>
             </div>
           </form>
+
+          <div className="mt-6 pt-6 border-t border-gray-200 dark:border-gray-700">
+            <p className="text-center text-sm text-gray-500 dark:text-gray-400 mb-4">Or continue with</p>
+            <div className="flex gap-3">
+              <Button type="button" variant="outline" size="md" className="flex-1" onClick={() => alert('Google login not implemented in this demo')}>
+                Google
+              </Button>
+              <Button type="button" variant="outline" size="md" className="flex-1" onClick={() => alert('Apple login not implemented in this demo')}>
+                Apple
+              </Button>
+            </div>
+          </div>
         </div>
 
         <p className="text-center mt-6 text-gray-600 dark:text-gray-400">
