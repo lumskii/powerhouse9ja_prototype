@@ -1,5 +1,5 @@
 import React from 'react';
-import { BellIcon, MenuIcon } from 'lucide-react';
+import { BellIcon } from 'lucide-react';
 interface HeaderProps {
   showBalance?: boolean;
   balance?: number;
@@ -7,31 +7,33 @@ interface HeaderProps {
 }
 export function Header({
   showBalance = false,
-  balance = 0,
-  onMenuClick
+  balance = 0
 }: HeaderProps) {
-  return <header className="bg-gradient-to-r from-primary to-primary-light dark:from-gray-800 dark:to-gray-900 text-white px-4 py-4 shadow-lg">
-      <div className="flex items-center justify-between max-w-md mx-auto">
-        <button onClick={onMenuClick} className="p-2 hover:bg-white/10 rounded-lg transition-colors">
-          <MenuIcon size={24} />
-        </button>
-
-        <div className="flex items-center gap-2">
-          <div className="w-10 h-10 rounded-full flex items-center justify-center shadow-lg overflow-hidden bg-white">
-            <img src="https://uploadthingy.s3.us-west-1.amazonaws.com/7PhhF5n42qvpwp1TQSmfPp/phouse_logo_nobg.png" alt="Powerhouse9ja Logo" className="w-full h-full object-contain" />
+  return <header className="fixed top-0 left-0 right-0 z-50 px-4 pt-4 pb-2">
+      <div className="max-w-md mx-auto">
+        {/* Floating Header Content */}
+        <div className="flex items-center justify-between">
+          {/* Logo */}
+          <div className="w-12 h-12 rounded-full flex items-center justify-center shadow-lg overflow-hidden bg-white">
+            <img src="https://uploadthingy.s3.us-west-1.amazonaws.com/7PhhF5n42qvpwp1TQSmfPp/phouse_logo_nobg.png" alt="Powerhouse9ja" className="w-full h-full object-contain" />
           </div>
-          <span className="font-bold text-lg">Powerhouse9ja</span>
-        </div>
 
-        <div className="flex items-center gap-3">
-          {showBalance && <div className="bg-white/20 backdrop-blur-sm px-3 py-1.5 rounded-lg">
-              <span className="text-xs opacity-80">Balance</span>
-              <p className="font-bold text-sm">₦{balance.toLocaleString()}</p>
-            </div>}
-          <button className="p-2 hover:bg-white/10 rounded-lg transition-colors relative">
-            <BellIcon size={20} />
-            <span className="absolute top-1 right-1 w-2 h-2 bg-gold rounded-full"></span>
-          </button>
+          {/* Right Side Actions */}
+          <div className="flex items-center gap-3">
+            {showBalance && <div className="bg-white dark:bg-gray-800 shadow-lg px-4 py-2 rounded-full border border-gray-100 dark:border-gray-700">
+                <span className="text-xs text-gray-500 dark:text-gray-400 block">
+                  Balance
+                </span>
+                <p className="font-bold text-sm text-gray-900 dark:text-white">
+                  ₦{balance.toLocaleString()}
+                </p>
+              </div>}
+
+            <button className="w-11 h-11 bg-white dark:bg-gray-800 shadow-lg rounded-full flex items-center justify-center relative border border-gray-100 dark:border-gray-700 hover:scale-105 transition-transform active:scale-95">
+              <BellIcon size={20} className="text-gray-700 dark:text-gray-300" />
+              <span className="absolute top-2 right-2 w-2 h-2 bg-gold rounded-full"></span>
+            </button>
+          </div>
         </div>
       </div>
     </header>;

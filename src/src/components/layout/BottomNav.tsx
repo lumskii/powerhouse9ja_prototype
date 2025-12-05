@@ -29,16 +29,19 @@ export function BottomNav({
     icon: UserIcon,
     label: 'Profile'
   }];
-  return <nav className="fixed bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 shadow-lg">
-      <div className="max-w-md mx-auto flex items-center justify-around px-2 py-3">
-        {navItems.map(item => {
-        const Icon = item.icon;
-        const isActive = active === item.id;
-        return <button key={item.id} onClick={() => onNavigate(item.id)} className={`flex flex-col items-center gap-1 px-4 py-2 rounded-xl transition-all ${isActive ? 'text-primary dark:text-gold bg-primary/10 dark:bg-gold/10' : 'text-gray-500 dark:text-gray-400 hover:text-primary dark:hover:text-gold'}`}>
-              <Icon size={20} strokeWidth={isActive ? 2.5 : 2} />
-              <span className="text-xs font-medium">{item.label}</span>
-            </button>;
-      })}
+  return <nav className="fixed bottom-0 left-0 right-0 z-50 px-4 pb-4 pt-2">
+      <div className="max-w-md mx-auto">
+        {/* Floating Navigation Items */}
+        <div className="flex items-center justify-around px-2 py-3 gap-2">
+          {navItems.map(item => {
+          const Icon = item.icon;
+          const isActive = active === item.id;
+          return <button key={item.id} onClick={() => onNavigate(item.id)} className={`flex flex-col items-center gap-1 px-3 py-2 rounded-2xl transition-all shadow-lg border ${isActive ? 'bg-white dark:bg-gray-800 text-primary dark:text-gold border-primary/20 dark:border-gold/20 scale-105' : 'bg-white dark:bg-gray-800 text-gray-500 dark:text-gray-400 border-gray-100 dark:border-gray-700 hover:text-primary dark:hover:text-gold hover:scale-105 active:scale-95'}`}>
+                <Icon size={22} strokeWidth={isActive ? 2.5 : 2} />
+                <span className="text-xs font-medium">{item.label}</span>
+              </button>;
+        })}
+        </div>
       </div>
     </nav>;
 }

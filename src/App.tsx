@@ -8,9 +8,10 @@ import { HomeScreen } from './src/pages/HomeScreen';
 import { TicketPurchaseScreen } from './src/pages/TicketPurchaseScreen';
 import { MyTicketsScreen } from './src/pages/MyTicketsScreen';
 import { DrawResultsScreen } from './src/pages/DrawResultsScreen';
+import { WinningsScreen } from './src/pages/WinningsScreen';
 import { WalletScreen } from './src/pages/WalletScreen';
 import { ProfileScreen } from './src/pages/ProfileScreen';
-type Screen = 'splash' | 'onboarding' | 'login' | 'register' | 'home' | 'purchase' | 'tickets' | 'results' | 'wallet' | 'profile';
+type Screen = 'splash' | 'onboarding' | 'login' | 'register' | 'home' | 'purchase' | 'tickets' | 'results' | 'winnings' | 'wallet' | 'profile';
 export function App() {
   const [currentScreen, setCurrentScreen] = useState<Screen>('splash');
   const renderScreen = () => {
@@ -31,6 +32,8 @@ export function App() {
         return <MyTicketsScreen onNavigate={screen => setCurrentScreen(screen as Screen)} />;
       case 'results':
         return <DrawResultsScreen onNavigate={screen => setCurrentScreen(screen as Screen)} />;
+      case 'winnings':
+        return <WinningsScreen onNavigate={screen => setCurrentScreen(screen as Screen)} />;
       case 'wallet':
         return <WalletScreen onNavigate={screen => setCurrentScreen(screen as Screen)} />;
       case 'profile':
