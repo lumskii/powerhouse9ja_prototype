@@ -17,6 +17,7 @@ export function TicketPurchaseScreen({
   const [showPinModal, setShowPinModal] = useState(false);
   const [pin, setPin] = useState('');
   const [pinError, setPinError] = useState('');
+  const [pinVisible, setPinVisible] = useState(false);
   const pinInputRef = useRef<HTMLInputElement | null>(null);
   const ticketPrice = 1000;
   const total = quantity * ticketPrice;
@@ -269,18 +270,24 @@ export function TicketPurchaseScreen({
                 {[...Array(4)].map((_, i) => (
                   <div
                     key={i}
-                    className="w-12 h-12 border-2 border-gray-300 dark:border-gray-600 rounded-xl flex items-center justify-center text-xl font-bold text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-800"
+                    className="w-12 h-12 border-2 border-gray-300 dark:border-gray-600 rounded-xl flex items-center justify-center text-xl font-bold text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-800 cursor-pointer hover:border-primary dark:hover:border-gold transition-colors"
                   >
-                    {pin[i] ? '•' : ''}
+                    {pin[i] ? (pinVisible ? pin[i] : '•') : ''}
                   </div>
                 ))}
               </div>
+              <button
+                onClick={() => setPinVisible(!pinVisible)}
+                className="w-full text-center text-sm text-primary dark:text-gold font-medium hover:underline py-2"
+              >
+                {pinVisible ? 'Hide PIN' : 'Show PIN'}
+              </button>
               <input
                 ref={pinInputRef}
                 type="tel"
                 inputMode="numeric"
                 pattern="[0-9]*"
-                className="w-full text-center text-2xl tracking-widest bg-transparent border rounded-xl px-3 py-3 text-gray-900 dark:text-white dark:bg-gray-700"
+                className="opacity-0 absolute w-0 h-0"
                 value={pin}
                 onChange={(e) => {
                   const v = e.target.value.replace(/\D/g, '').slice(0, 4)
