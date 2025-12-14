@@ -13,6 +13,7 @@ import { WalletScreen } from './src/pages/WalletScreen'
 import { ProfileScreen } from './src/pages/ProfileScreen'
 import { PersonalInformationScreen } from './src/pages/PersonalInformationScreen'
 import { SecurityPrivacyScreen } from './src/pages/SecurityPrivacyScreen'
+import { PINScreen } from './src/pages/PINScreen'
 import { NotificationsSettingsScreen } from './src/pages/NotificationsSettingsScreen'
 import { HelpSupportScreen } from './src/pages/HelpSupportScreen'
 type Screen =
@@ -29,6 +30,7 @@ type Screen =
   | 'profile'
   | 'personal-info'
   | 'security'
+  | 'pin'
   | 'notifications-settings'
   | 'help-support'
 export function App() {
@@ -110,6 +112,8 @@ export function App() {
         return (
           <SecurityPrivacyScreen onBack={() => setCurrentScreen('profile')} />
         )
+      case 'pin':
+        return <PINScreen onBack={() => setCurrentScreen('profile')} />
       case 'notifications-settings':
         return (
           <NotificationsSettingsScreen

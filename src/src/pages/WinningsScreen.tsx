@@ -73,17 +73,11 @@ export function WinningsScreen({
                 </div>
               </div>
 
-              <div className="grid grid-cols-2 gap-3">
+              <div className="grid grid-cols-1 gap-3">
                 <div className="bg-white/20 backdrop-blur-sm rounded-xl p-3">
                   <p className="text-primary/70 text-xs mb-1">Delivered</p>
                   <p className="text-2xl font-bold text-primary">
                     {winnings.filter(w => w.status === 'delivered').length}
-                  </p>
-                </div>
-                <div className="bg-white/20 backdrop-blur-sm rounded-xl p-3">
-                  <p className="text-primary/70 text-xs mb-1">In Transit</p>
-                  <p className="text-2xl font-bold text-primary">
-                    {winnings.filter(w => w.status === 'in_transit').length}
                   </p>
                 </div>
               </div>

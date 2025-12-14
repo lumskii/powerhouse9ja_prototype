@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { ArrowLeftIcon, MinusIcon, PlusIcon, WalletIcon, CheckCircleIcon, TrophyIcon, UnlockIcon } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 import { Card } from '../components/ui/Card';
@@ -14,6 +14,10 @@ export function TicketPurchaseScreen({
 }: TicketPurchaseScreenProps) {
   const [step, setStep] = useState<'select' | 'confirm' | 'success'>('select');
   const [quantity, setQuantity] = useState(1);
+  const [showPinModal, setShowPinModal] = useState(false);
+  const [pin, setPin] = useState('');
+  const [pinError, setPinError] = useState('');
+  const pinInputRef = useRef<HTMLInputElement | null>(null);
   const ticketPrice = 1000;
   const total = quantity * ticketPrice;
   const walletBalance = 25000;
@@ -24,10 +28,28 @@ export function TicketPurchaseScreen({
     if (step === 'select') {
       setStep('confirm');
     } else if (step === 'confirm') {
-      setStep('success');
-      setTimeout(onComplete, 2000);
+      setPin('');
+      setPinError('');
+      setShowPinModal(true);
     }
   };
+
+  const handleConfirmPin = () => {
+    if (pin.length !== 4) {
+      setPinError('Enter your 4-digit PIN');
+      return;
+    }
+    setPinError('');
+    setShowPinModal(false);
+    setStep('success');
+    setTimeout(onComplete, 2000);
+  };
+
+  useEffect(() => {
+    if (showPinModal) {
+      requestAnimationFrame(() => pinInputRef.current?.focus());
+    }
+  }, [showPinModal]);
   if (step === 'success') {
     return <div className="min-h-screen bg-gradient-to-br from-primary to-primary-light flex items-center justify-center p-4">
         <div className="text-center">
@@ -220,5 +242,67 @@ export function TicketPurchaseScreen({
             Secure wallet payment • No hidden fees
           </p>}
       </div>
+
+      {/* PIN Modal */}
+      {showPinModal && <div className="fixed inset-0 z-[120] flex items-end justify-center">
+          <div className="absolute inset-0 bg-black/50 backdrop-blur-sm" onClick={() => setShowPinModal(false)}></div>
+          <div className="relative w-full max-w-md bg-white dark:bg-gray-800 rounded-t-3xl shadow-2xl animate-slide-up px-6 py-6">
+            <div className="flex items-center justify-between mb-4">
+              <div>
+                <h3 className="text-lg font-bold text-gray-900 dark:text-white">
+                  Enter PIN
+                </h3>
+                <p className="text-xs text-gray-500 dark:text-gray-400">
+                  PIN is required to complete purchase
+                </p>
+              </div>
+              <button onClick={() => setShowPinModal(false)} className="w-10 h-10 rounded-full bg-gray-100 dark:bg-gray-700 flex items-center justify-center hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
+                X
+              </button>
+            </div>
+
+            <div className="space-y-4">
+              <div
+                className="flex gap-2 justify-center"
+                onClick={() => pinInputRef.current?.focus()}
+              >
+                {[...Array(4)].map((_, i) => (
+                  <div
+                    key={i}
+                    className="w-12 h-12 border-2 border-gray-300 dark:border-gray-600 rounded-xl flex items-center justify-center text-xl font-bold text-gray-900 dark:text-white bg-gray-50 dark:bg-gray-800"
+                  >
+                    {pin[i] ? '•' : ''}
+                  </div>
+                ))}
+              </div>
+              <input
+                ref={pinInputRef}
+                type="tel"
+                inputMode="numeric"
+                pattern="[0-9]*"
+                className="w-full text-center text-2xl tracking-widest bg-transparent border rounded-xl px-3 py-3 text-gray-900 dark:text-white dark:bg-gray-700"
+                value={pin}
+                onChange={(e) => {
+                  const v = e.target.value.replace(/\D/g, '').slice(0, 4)
+                  setPin(v)
+                }}
+                maxLength={4}
+                autoFocus
+              />
+              {pinError && <p className="text-sm text-red-600 dark:text-red-400 text-center">
+                  {pinError}
+                </p>}
+
+              <div className="flex gap-3">
+                <Button variant="outline" className="flex-1" onClick={() => setShowPinModal(false)}>
+                  Cancel
+                </Button>
+                <Button variant="primary" className="flex-1" onClick={handleConfirmPin} disabled={pin.length !== 4}>
+                  Confirm
+                </Button>
+              </div>
+            </div>
+          </div>
+        </div>}
     </div>;
 }

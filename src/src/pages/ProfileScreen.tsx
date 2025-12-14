@@ -9,6 +9,7 @@ import {
   SunIcon,
   TrophyIcon,
   CopyIcon,
+  LockIcon,
 } from 'lucide-react'
 import { Header } from '../components/layout/Header'
 import { BottomNav } from '../components/layout/BottomNav'
@@ -40,6 +41,11 @@ export function ProfileScreen({ onNavigate, onLogout }: ProfileScreenProps) {
       icon: ShieldIcon,
       label: 'Security & Privacy',
       action: () => onNavigate('security'),
+    },
+    {
+      icon: LockIcon,
+      label: 'Transaction PIN',
+      action: () => onNavigate('pin'),
     },
     {
       icon: BellIcon,
